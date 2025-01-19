@@ -1,5 +1,6 @@
 import { client } from './client';
 
+//Popular Car Data
 export const FetchCarsData = async () => {
   try {
     const query = `*[_type == "card"] | order(_createdAt desc) {
@@ -22,6 +23,7 @@ export const FetchCarsData = async () => {
   }
 };
 
+//single car data 
 export const fetchSingleCarData = async (slug) => {
   const query = `*[_type == "card" && slug.current == $slug][0]{
     _id,

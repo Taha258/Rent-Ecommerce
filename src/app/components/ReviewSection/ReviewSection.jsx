@@ -6,6 +6,23 @@ const ReviewsSection = () => {
   // State to manage the visible reviews
   const [visibleReviews, setVisibleReviews] = useState(2);
 
+  // State to manage user comments
+  const [comments, setComments] = useState([]);
+  const [newComment, setNewComment] = useState({
+    name: "",
+    occupation: "",
+    message: ""
+  });
+
+  // Predefined set of avatar images
+  const avatarImages = [
+    "/images/avatar1.png",
+    "/images/avatar2.png",
+    "/images/avatar3.png",
+    "/images/avatar4.png",
+    "/images/avatar5.png"
+  ];
+
   // Dummy reviews data
   const reviews = [
     {
@@ -46,6 +63,26 @@ const ReviewsSection = () => {
     setVisibleReviews((prev) => prev + 2); // Load 2 more reviews
   };
 
+  // Function to handle input changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewComment(prev => ({ ...prev, [name]: value }));
+  };
+
+  // Function to handle adding a new comment
+  const handleAddComment = (e) => {
+    e.preventDefault();
+    if (newComment.name.trim() !== "" && newComment.message.trim() !== "") {
+      const randomImage = avatarImages[Math.floor(Math.random() * avatarImages.length)];
+      setComments([...comments, { 
+        ...newComment, 
+        date: new Date().toLocaleDateString(),
+        image: randomImage
+      }]);
+      setNewComment({ name: "", occupation: "", message: "" });
+    }
+  };
+
   return (
     <div className="py-12 max-w-[1450px] mx-auto">
       <div className="container mx-auto px-4">
@@ -56,19 +93,20 @@ const ReviewsSection = () => {
           </span>
         </div>
 
-        <div className="flex flex-col bg-white shadow-md w-full">
+        <div className="flex flex-col bg-white shadow-md w-full rounded-lg">
           {reviews.slice(0, visibleReviews).map((review) => (
             <div
               key={review.id}
-              className="p-6 rounded-lg flex space-x-7 w-full"
+              className="p-6 rounded-lg flex space-x-7 w-full border-b last:border-b-0"
             >
               <div>
-              <Image
-  src={review.image}
-  alt={review.name}
-  width={70} // Explicitly set the width
-  height={70} // Explicitly set the height
-/>
+                <Image
+                  src={review.image || "/placeholder.svg"}
+                  alt={review.name}
+                  width={70}
+                  height={70}
+                  className="rounded-full"
+                />
               </div>
               <div className="flex-1">
                 <div className="flex justify-between">
@@ -78,11 +116,11 @@ const ReviewsSection = () => {
                 <div className="flex justify-between">
                   <p className="text-gray-400 mt-4">{review.role}</p>
                   <Image
-  src="/images/review-stars.svg"
-  alt="Rating"
-  width={100} // Replace with the actual width of the image in pixels
-  height={20} // Replace with the actual height of the image in pixels
-/>
+                    src="/images/review-stars.svg"
+                    alt="Rating"
+                    width={100}
+                    height={20}
+                  />
                 </div>
                 <p className="mt-4 text-gray-600 leading-8 text-base">
                   {review.text}
@@ -114,6 +152,78 @@ const ReviewsSection = () => {
               </button>
             </div>
           )}
+
+          {/* User Comments Section */}
+          <div className="mt-8 p-6 bg-gray-50 rounded-lg">
+            <h3 className="text-2xl font-semibold mb-6">User Comments</h3>
+            {comments.map((comment, index) => (
+              <div key={index} className="bg-white p-4 rounded-lg mb-4 flex items-start space-x-4 shadow-sm">
+                <div className="flex-shrink-0">
+                  <Image
+                    src={comment.image || "/placeholder.svg"}
+                    alt={comment.name}
+                    width={50}
+                    height={50}
+                    className="rounded-full"
+                  />
+                </div>
+                <div className="flex-grow">
+                  <div className="flex justify-between items-center mb-2">
+                    <h4 className="font-semibold text-lg">{comment.name}</h4>
+                    <p className="text-sm text-gray-500">{comment.date}</p>
+                  </div>
+                  <p className="text-sm text-gray-600 mb-2">{comment.occupation}</p>
+                  <p className="text-gray-700">{comment.message}</p>
+                </div>
+              </div>
+            ))}
+            <form onSubmit={handleAddComment} className="mt-6 bg-white p-6 rounded-lg shadow-sm">
+              <h4 className="text-xl font-semibold mb-4">Add Your Comment</h4>
+              <div className="space-y-4">
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={newComment.name}
+                    onChange={handleInputChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    required
+                  />
+                </div>
+                <div>
+                  <label htmlFor="occupation" className="block text-sm font-medium text-gray-700 mb-1">Occupation</label>
+                  <input
+                    type="text"
+                    id="occupation"
+                    name="occupation"
+                    value={newComment.occupation}
+                    onChange={handleInputChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={newComment.message}
+                    onChange={handleInputChange}
+                    rows={4}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    required
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="w-full bg-[#3563E9] text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200 font-semibold"
+                >
+                  Add Comment
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
@@ -121,3 +231,4 @@ const ReviewsSection = () => {
 };
 
 export default ReviewsSection;
+
