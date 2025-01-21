@@ -1,7 +1,8 @@
-'use client'
+"use client";
 import React, { useEffect, useState } from "react";
 import ProductCard from "../Products/ProductCard";
 import { FetchCarsData } from "../../../sanity/lib/fetchData";
+import Link from "next/link";
 
 const PopularCars = () => {
   const [carsData, setCarsData] = useState([]);
@@ -14,7 +15,7 @@ const PopularCars = () => {
         const data = await FetchCarsData();
         setCarsData(data);
       } catch (err) {
-        console.error('Error fetching car data:', err);
+        console.error("Error fetching car data:", err);
         setError(err.message);
       } finally {
         setLoading(false);
@@ -49,29 +50,24 @@ const PopularCars = () => {
   }
 
   return (
-    <div className="container max-w-[1600px] mx-auto justify-center flex flex-col">
-      <div className="flex mt-10 items-center font-bold justify-between px-5">
-        <h4 className="text-xl text-[#90A3BF] font-semibold">Popular Car</h4>
-        <div>
-          <button className="py-4 text-[#3563E9] rounded-[5px] hover:underline">
-            View All
-          </button>
-        </div>
+    <div className="container max-w-[1600px] mx-auto flex flex-col mb-20">
+      {/* Header Section */}
+      <div className="flex mt-10 items-center font-bold justify-between px-4 sm:px-2">
+        <h4 className="text-xl text-[#90A3BF] font-semibold">Popular Cars</h4>
+        <Link
+          href="/category"
+          className="py-2 px-4 text-[#3563E9] rounded-[5px] hover:underline"
+        >
+          View All
+        </Link>
       </div>
 
-      <div className="w-full mt-6 overflow-hidden relative mx-auto">
-        <div className="flex desktop:flex-wrap desktop:justify-between mobile:overflow-x-auto mobile:gap-4 tablet:overflow-x-auto tablet:gap-4">
-          {carsData.map((car) => (
-            <div
-              key={car._id}
-              className="min-w-[300px] flex-shrink-0 desktop:w-[calc(25%-1rem)]"
-            >
-              <ProductCard product={car} />
-            </div>
-          ))}
-        </div>
+      {/* Responsive Grid Layout */}
+      <div className="grid mt-6 gap-6 px-5 sm:flex sm:flex-col sm:items-center md:grid md:grid-cols-2 md:place-items-center md:gap-x-1 xl:grid-cols-3 2xl:grid-cols-4">
+        {carsData.map((car) => (
+          <ProductCard key={car._id} product={car} />
+        ))}
       </div>
-      <hr className="mb-10" />
     </div>
   );
 };
