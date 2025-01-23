@@ -15,7 +15,7 @@ export const FetchCarsData = async () => {
       "imageUrl": image.asset->url
     }`;
     
-    const data = await client.fetch(query, { cache: 'no-store' });
+    const data = await client.fetch(query, { cache: 'force-cache' });
     return data;
   } catch (error) {
     console.error('Error fetching from Sanity:', error);
@@ -38,7 +38,7 @@ export const fetchSingleCarData = async (slug) => {
     description
   }`;
   
-  return client.fetch(query, { slug, cache: 'no-store' });
+  return client.fetch(query, { slug, cache: 'force-cache' });
 };
 
 //Recommentcar Data
@@ -57,7 +57,7 @@ export const fetchRecommendedData = async () => {
   }`;
   
   try {
-    return await client.fetch(query, { cache: 'no-store' });
+    return await client.fetch(query, { cache: 'force-cache' });
   } catch (error) {
     console.error('Error fetching recommended cars:', error);
     throw error;
@@ -79,7 +79,7 @@ export const FetchRecommendedData = async () => {
   }`
   
   try {
-    return await client.fetch(query, { cache: 'no-store' })
+    return await client.fetch(query, { cache: 'force-cache' })
   } catch (error) {
     console.error('Error fetching recommended cars:', error)
     throw error
@@ -101,7 +101,7 @@ export const fetchSingleRecommendedCar = async (slug) => {
   }`
   
   try {
-    return await client.fetch(query, { slug, cache: 'no-store' })
+    return await client.fetch(query, { slug, cache: 'force-cache' })
   } catch (error) {
     console.error('Error fetching single recommended car:', error)
     throw error
@@ -126,7 +126,7 @@ export const FetchCategoryData = async () => {
   
   try {
     console.log("Executing Sanity query for all categories");
-    const result = await client.fetch(query, { cache: 'no-store' })
+    const result = await client.fetch(query, { cache: 'force-cache' })
     console.log("Sanity query result:", result); 
     if (!result || result.length === 0) {
       console.log("No cars found in the database");
@@ -155,7 +155,7 @@ export const fetchCategoryData = async (slug) => {
   
   try {
     console.log(`Executing Sanity query for slug: ${slug}`);
-    const result = await client.fetch(query, { slug, cache: 'no-store' })
+    const result = await client.fetch(query, { slug, cache: 'force-cache' })
     console.log("Sanity query result for single car:", result); 
     if (!result) {
       console.log(`Car not found for slug: ${slug}`);
