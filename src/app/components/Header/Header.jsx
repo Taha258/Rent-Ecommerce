@@ -1,7 +1,12 @@
-import Image from "next/image";
-import Link from "next/link";
+'use client';
+import Image from 'next/image';
+import Link from 'next/link';
+import { SignInButton, UserButton } from '@clerk/nextjs';
+import { useAuth } from '@clerk/nextjs';
 
 const Header = () => {
+  const { isSignedIn } = useAuth();
+
   return (
     <header className="py-6 bg-white border-b">
       <div className="mx-auto max-w-[1700px] px-4 flex items-center justify-between md:flex-row flex-col">
@@ -68,7 +73,7 @@ const Header = () => {
           </div>
         </div>
 
-        <div className="hidden md:flex space-x-3">
+        <div className="hidden md:flex space-x-3 items-center">
           {/* Heart Icon */}
           <div className="p-3 border border-gray-300 rounded-full flex items-center justify-center">
             <Image
@@ -79,37 +84,24 @@ const Header = () => {
             />
           </div>
 
-          {/* Notification Icon with Badge */}
+          {/* Notification Icon */}
           <div className="relative">
-            <div className="p-3 border border-gray-300 rounded-full flex items-center justify-center">
-              <Image
-                src="/images/notification.svg"
-                alt="Notification Logo"
-                width={40}
-                height={40}
-              />
-            </div>
-            {/* Red Circle */}
-            <div className="absolute top-0 right-0 w-[0.9rem] h-[0.9rem] bg-red-500 rounded-full border border-white"></div>
+            {/* Notification Badge */}
           </div>
 
           {/* Settings Icon */}
-          <div className="border border-gray-300 rounded-full flex items-center justify-center w-[4.3rem]">
-            <Image
-              src="/images/setting.svg"
-              alt="Setting Logo"
-              width={30}
-              height={30}
-            />
-          </div>
+        
 
-          <Image
-            src="/images/profile.svg"
-            alt="Profile Logo"
-            width={60}
-            height={60}
-            className="rounded-full"
-          />
+          {/* Clerk Buttons */}
+          {!isSignedIn ? (
+            <SignInButton mode="modal">
+              <button className="bg-[#3563E9] hover:bg-[#2f58d5] text-lg text-white px-4 py-3 rounded-full">Login</button>
+            </SignInButton>
+          ) : (
+             
+            <UserButton/>
+            
+          )}
         </div>
       </div>
     </header>

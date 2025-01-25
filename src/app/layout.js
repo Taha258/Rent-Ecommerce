@@ -2,6 +2,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
+import { ClerkProvider } from "@clerk/nextjs";
 
 
 const jakartaSans = localFont({
@@ -30,6 +31,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
+    <ClerkProvider>
     <html lang="en">
       <body
         className={`${jakartaSans.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
@@ -39,5 +41,6 @@ export default function RootLayout({ children }) {
         <Footer/>
       </body>
     </html>
+    </ClerkProvider>
   );
 }
