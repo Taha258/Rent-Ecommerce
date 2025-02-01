@@ -32,7 +32,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-, "src/app/components/Cars/PopularCars.jsx", "src/sanity/lib/fetchData.js", "src/app/recommended-Car/[slug]/page.jsx", "src/app/cars/[slug]/page.jsx"  ],
+, "src/app/components/Cars/PopularCars.jsx", "src/sanity/lib/fetchData.js", "src/app/recommended-Car/[slug]/page.jsx", "src/app/cars/[slug]/page.jsx", "src/app/lib/stripe.js"  ],
   "exclude": [
     "node_modules"
   ]

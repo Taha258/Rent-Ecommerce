@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { SignInButton, UserButton } from '@clerk/nextjs';
 import { useAuth } from '@clerk/nextjs';
+import SearchBar from '../SearchBar';
 
 const Header = () => {
   const { isSignedIn } = useAuth();
@@ -36,30 +37,7 @@ const Header = () => {
 
           {/* Search Field */}
           <div className="relative w-full md:w-[350px] lg:w-[550px] ml-0 lg:ml-28 md:ml-10 flex items-center sm:mt-5">
-            {/* Search Icon */}
-            <div className="absolute top-0 left-5 flex items-center h-full text-gray-500">
-              <Image
-                src="/images/search-icon.svg"
-                alt="Search Logo"
-                width={25}
-                height={25}
-              />
-            </div>
-
-            {/* Input Field */}
-            <input
-              type="text"
-              placeholder="Search something here"
-              className="w-full h-12 pl-16 pr-10 rounded-full sm:rounded-xl sm:text-sm sm:pr-0 py-8 bg-white text-[#596780] border focus:outline-none tracking-wider font-[500]"
-            />
-            <div className="sm:hidden absolute flex items-center right-5">
-              <Image
-                src="/images/volume-icon.svg"
-                alt="Volume Logo"
-                width={25}
-                height={25}
-              />
-            </div>
+          <SearchBar/>
           </div>
 
           {/* Volume Icon for Mobile */}
@@ -109,3 +87,35 @@ const Header = () => {
 };
 
 export default Header;
+
+
+
+
+
+
+// <div className="relative w-full md:w-[350px] lg:w-[550px] ml-0 lg:ml-28 md:ml-10 flex items-center sm:mt-5">
+// {/* Search Icon */}
+// <div className="absolute top-0 left-5 flex items-center h-full text-gray-500">
+//   <Image
+//     src="/images/search-icon.svg"
+//     alt="Search Logo"
+//     width={25}
+//     height={25}
+//   />
+// </div>
+
+// {/* Input Field */}
+// <input
+//   type="text"
+//   placeholder="Search something here"
+//   className="bg-[pink] w-full h-12 pl-16 pr-10 rounded-full sm:rounded-xl sm:text-sm sm:pr-0 py-8  text-[#596780] border focus:outline-none tracking-wider font-[500]"
+// />
+// <div className="sm:hidden absolute flex items-center right-5">
+//   <Image
+//     src="/images/volume-icon.svg"
+//     alt="Volume Logo"
+//     width={25}
+//     height={25}
+//   />
+// </div>
+// </div>

@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import { ClerkProvider } from "@clerk/nextjs";
+import CountProvider  from "../../src/app/countProvider";
 
 
 const jakartaSans = localFont({
@@ -37,7 +38,9 @@ export default function RootLayout({ children }) {
         className={`${jakartaSans.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Header/>
-        {children}
+        <CountProvider>
+          {children}
+        </CountProvider>
         <Footer/>
       </body>
     </html>
