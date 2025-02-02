@@ -172,4 +172,3 @@ export default async function CarDetail({ params }) {
     </div>
   );
 }
-
