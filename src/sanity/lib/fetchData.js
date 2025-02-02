@@ -57,13 +57,35 @@ export const fetchRecommendedData = async () => {
       seats,
       "slug": slug.current,
       "imageUrl": image.asset->url
-    }`;
-    return await client.fetch(query, { cache: 'force-cache' });
+    }`
+    return await client.fetch(query, { cache: "force-cache" })
   } catch (error) {
-    console.error('Error fetching recommended cars:', error);
-    throw new Error('Sorry, Your Network is very slow. Please try again later.');
+    console.error("Error fetching recommended cars:", error)
+    throw new Error("Sorry, Your Network is very slow. Please try again later.")
   }
-};
+}
+
+export const fetchSingleRecommendedCarData = async (slug) => {
+  try {
+    const query = `*[_type == "recommendedCar" && slug.current == $slug][0]{
+      _id,
+      brand,
+      category,
+      price,
+      liters,
+      auto,
+      seats,
+      "slug": slug.current,
+      "imageUrl": image.asset->url,
+      description
+    }`
+    return await client.fetch(query, { slug, cache: "force-cache" })
+  } catch (error) {
+    console.error("Error fetching single recommended car:", error)
+    throw new Error("Sorry, Your Network is very slow. Please try again later.")
+  }
+}
+
 
 // Fetch Category Data
 export const FetchCategoryData = async () => {

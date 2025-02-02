@@ -4,12 +4,12 @@ import Link from "next/link";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import ReviewsSection from "../../components/ReviewSection/ReviewSection";
 import RecentCars from "../../components/Cars/RecentCars";
-import { fetchSingleRecommendedCar } from "../../../sanity/lib/fetchData";
+import { fetchSingleRecommendedCarData } from "../../../sanity/lib/fetchData";
 import { notFound } from "next/navigation";
 import { RentButton } from "./rent-button";
 
 export async function generateMetadata({ params }) {
-    const car = await fetchSingleRecommendedCar(params.slug);
+    const car = await fetchSingleRecommendedCarData(params.slug);
     return {
       title: car ? `${car.brand} - Recommended Car Details` : "Car Not Found",
     };
@@ -17,7 +17,7 @@ export async function generateMetadata({ params }) {
   
   // This is a Server Component
   async function RecommendedCarDetail({ params }) {
-    const car = await fetchSingleRecommendedCar(params.slug);
+    const car = await fetchSingleRecommendedCarData(params.slug);
   
     if (!car) {
       notFound();
